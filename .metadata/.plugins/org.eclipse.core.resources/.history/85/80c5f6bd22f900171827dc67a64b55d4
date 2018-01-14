@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.List"%>
+<%@page import="tn.iit.models"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+		List<SeanceModel> seance = request.getSession().getAttribute("seances");
+	%>
+
+	<h1>Liste de tout les seance</h1>
+	<table>
+		<tr>
+			<td>Date Seance</td>
+			<td>Heure Debut</td>
+			<td>Heure Fin</td>
+			<td>salle</td>
+			<td>niveau</td>
+			<td>matiere</td>
+			<td>enseignant</td>
+			<td>departement</td>
+		</tr>
+
+		<tr>
+			<td>Date Seance</td>
+			<td>Heure Debut</td>
+			<td>Heure Fin</td>
+			<td>salle</td>
+			<td>niveau</td>
+			<td>matiere</td>
+			<td>enseignant</td>
+			<td>departement</td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

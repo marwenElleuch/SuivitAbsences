@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.List"%>
+<%@page import="tn.iit.models.*"%>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%> 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Seances</title>
+</head>
+<body>
+
+	<%
+		Integer a = (Integer) request.getAttribute("int");
+		
+		List<SeanceModel> seance = (List<SeanceModel>) request.getAttribute("seances");
+		if (seance != null) {
+			out.print(seance.size());
+		} else
+			out.print("0");
+	%>
+
+	<h1>Liste de tout les seance</h1>
+	<table>
+		<tr>
+			<td>Date Seance</td>
+			<td>Heure Debut</td>
+			<td>Heure Fin</td>
+			<td>salle</td>
+			<td>niveau</td>
+			<td>matiere</td>
+			<td>enseignant</td>
+			<td>departement</td>
+		</tr>
+<c:forEach items="${userArray}" var="user"></c:forEach>
+		<tr>
+			<td>Date Seance</td>
+			<td>Heure Debut</td>
+			<td>Heure Fin</td>
+			<td>salle</td>
+			<td>niveau</td>
+			<td>matiere</td>
+			<td>enseignant</td>
+			<td>departement</td>
+		</tr>
+	</table>
+
+
+</body>
+</html>

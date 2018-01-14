@@ -1,0 +1,174 @@
+package tn.iit.util;
+
+import java.io.IOException;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import tn.iit.models.MatiereModel;
+import tn.iit.models.NiveauModel;
+import tn.iit.models.SalleModel;
+import tn.iit.models.SeanceModel;
+import tn.iit.serialize.JsonDeserializerMatiere;
+import tn.iit.serialize.JsonDeserializerNiveau;
+import tn.iit.serialize.JsonDeserializerSalle;
+import tn.iit.serialize.JsonDeserializerSeance;
+
+public class GetEntity {
+
+	public static <T> Object get(T entity, String uri) {
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		entity = gson.fromJson(content, new TypeToken<T>() {
+		}.getType());
+
+		return entity;
+	}
+
+	public static SalleModel getSalle(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/seance/get/" + id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(SalleModel.class, new JsonDeserializerSalle())
+				.serializeNulls().create();
+		SalleModel seance = gson.fromJson(content, new TypeToken<SalleModel>() {
+		}.getType());
+
+		return seance;
+	}
+
+	public static List<SalleModel> getListSalle() throws IOException {
+		String uri = "http://localhost:8080/Service/salle/all";
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		List<SalleModel> salles = gson.fromJson(contentall, new TypeToken<List<SalleModel>>() {
+		}.getType());
+
+		return salles;
+	}
+
+	public static SeanceModel getSeance(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/seance/get/" + id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(SeanceModel.class, new JsonDeserializerSeance())
+				.serializeNulls().create();
+		SeanceModel seance = gson.fromJson(content, new TypeToken<SeanceModel>() {
+		}.getType());
+		return seance;
+	}
+
+	public static List<SeanceModel> getListSeances() throws IOException {
+		String uri = "http://localhost:8080/Service/seance/all";
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSeance()).serializeNulls()
+				.create();
+		List<SeanceModel> seances = gson.fromJson(contentall, new TypeToken<List<SeanceModel>>() {
+		}.getType());
+
+		return seances;
+	}
+
+	public static NiveauModel getNiveau(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/niveau/get/" + id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(NiveauModel.class, new JsonDeserializerNiveau())
+				.serializeNulls().create();
+		NiveauModel niveau = gson.fromJson(content, new TypeToken<NiveauModel>() {
+		}.getType());
+
+		return niveau;
+	}
+
+	public static List<NiveauModel> getListNiveaux() throws IOException {
+		String uri = "http://localhost:8080/Service/niveau/all";
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerNiveau()).serializeNulls()
+				.create();
+		List<NiveauModel> nivaux = gson.fromJson(contentall, new TypeToken<List<NiveauModel>>() {
+		}.getType());
+
+		return nivaux;
+	}
+	public static MatiereModel getMaiere(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/matiere/get/" + id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(MatiereModel.class, new JsonDeserializerMatiere())
+				.serializeNulls().create();
+		MatiereModel matiere = gson.fromJson(content, new TypeToken<MatiereModel>() {
+		}.getType());
+		return matiere;
+	}
+
+	public static List<NiveauModel> getListNiveaux() throws IOException {
+		String uri = "http://localhost:8080/Service/niveau/all";
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerNiveau()).serializeNulls()
+				.create();
+		List<NiveauModel> nivaux = gson.fromJson(contentall, new TypeToken<List<NiveauModel>>() {
+		}.getType());
+
+		return nivaux;
+	}
+	
+
+}

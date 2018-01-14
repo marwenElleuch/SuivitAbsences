@@ -1,0 +1,16 @@
+package tn.iit.util;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import tn.iit.models.SalleModel;
+
+public class PostEntity {
+
+	public static void ajoutSeance(int ) {
+		Gson gson = new GsonBuilder().create();
+		gson.toJson("nom",s.getNom());
+		gson.toJson(123, System.out);
+
+	}
+}

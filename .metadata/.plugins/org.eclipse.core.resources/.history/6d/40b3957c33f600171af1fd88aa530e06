@@ -1,0 +1,66 @@
+package tn.iit.consume;
+
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
+import myrest.models.Departement;
+import myrest.models.Enseignant;
+import myrest.models.Matiere;
+import myrest.models.Niveau;
+import myrest.models.Salle;
+import myrest.models.Seance;
+
+public class JsonDeserializerSeance implements JsonDeserializer<Seance> {
+
+	public Seance deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+			throws JsonParseException {
+		Seance s = new Seance();
+		Date date = null;
+		JsonObject salleJson = json.getAsJsonObject();
+		int id = salleJson.get("id").getAsInt();
+		int heureDebut = salleJson.get("heureDebut").getAsInt();
+		int heureFin = salleJson.get("heureFin").getAsInt();
+		try {
+			String dateSeance = salleJson.get("dateSeance").getAsString();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			date = format.parse(dateSeance);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		JsonObject se = salleJson.get("salle").getAsJsonObject();
+		Salle salle = new JsonDeserializerSalle().deserialize(se, typeOfT, context);
+
+		JsonObject niveaujson = salleJson.get("niveau").getAsJsonObject();
+		Niveau niveau = new JsonDeserializerNiveau().deserialize(niveaujson, typeOfT, context);
+
+		JsonObject matiereJSON = salleJson.get("matiere").getAsJsonObject();
+		Matiere matiere = new JsonDeserializerMatiere().deserialize(matiereJSON, typeOfT, context);
+
+		JsonObject enseignantJson = salleJson.get("enseignant").getAsJsonObject();
+		Enseignant enseignant = new JsonDeserializerEnseignant().deserialize(enseignantJson, typeOfT, context);
+
+		JsonObject departementJson = salleJson.get("salle").getAsJsonObject();
+		Departement departement = new JsonDeserializerDepartement().deserialize(departementJson, typeOfT, context);
+
+		s.setId(id);
+		s.setDateSeance(date);
+		s.setHeureDebut(heureDebut);
+		s.setHeureFin(heureFin);
+		s.setSalle(salle);
+		s.setDepartement(departement);
+		s.setEnseignant(enseignant);
+		s.setMatiere(matiere);
+		s.setNiveau(niveau);
+		return s;
+	}
+
+}

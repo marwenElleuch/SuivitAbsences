@@ -1,0 +1,50 @@
+package tn.iit.util;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import tn.iit.consume.JsonDeserializerSalle;
+import tn.iit.consume.Salle;
+
+public class GetEntity {
+
+	public static <T>Object get(T entity,String uri) {
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		
+		Gson gson = new GsonBuilder().registerTypeAdapter(<T>Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		Salle seance = gson.fromJson(content, new TypeToken<Salle>() {
+		}.getType());
+		
+		//return seance;
+		
+	
+		return entity;
+	}
+	
+	private static Salle getSalle(String uri) throws IOException {
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Salle.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		Salle seance = gson.fromJson(content, new TypeToken<Salle>() {
+		}.getType());
+		return seance;
+	}
+	
+}

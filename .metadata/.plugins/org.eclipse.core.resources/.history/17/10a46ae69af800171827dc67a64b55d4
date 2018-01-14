@@ -1,0 +1,99 @@
+package tn.iit.util;
+
+import java.io.IOException;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import tn.iit.models.SalleModel;
+import tn.iit.models.SeanceModel;
+import tn.iit.serialize.JsonDeserializerSalle;
+import tn.iit.serialize.JsonDeserializerSeance;
+
+public class GetEntity {
+
+	public static <T>Object get(T entity,String uri) {
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		entity = gson.fromJson(content, new TypeToken<T>() {
+		}.getType());
+		
+		return entity;
+	}
+
+	public static SalleModel getSalle(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/seance/get/"+id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(SalleModel.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		SalleModel seance = gson.fromJson(content, new TypeToken<SalleModel>() {
+		}.getType());
+		
+		return seance;
+	}
+	
+	public static List<SalleModel> getListSalle(String uri) throws IOException {
+		
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		List<SalleModel> salles = gson.fromJson(contentall, new TypeToken<List<SalleModel>>() {
+		}.getType());
+		
+		return salles;
+	}
+	
+	public static SeanceModel getSeance(long id) throws IOException {
+		String uri = "http://localhost:8080/Service/seance/get/"+id;
+		String content = "";
+		try {
+			content = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(SeanceModel.class, new JsonDeserializerSeance()).serializeNulls()
+				.create();
+		SeanceModel seance = gson.fromJson(content, new TypeToken<SeanceModel>() {
+		}.getType());
+		return seance;
+	}
+	public static List<SeanceModel> getListSeances(String uri) throws IOException {
+		
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
+				.create();
+		List<SeanceModel> salles = gson.fromJson(contentall, new TypeToken<List<SalleModel>>() {
+		}.getType());
+		
+		return salles;
+	}
+}

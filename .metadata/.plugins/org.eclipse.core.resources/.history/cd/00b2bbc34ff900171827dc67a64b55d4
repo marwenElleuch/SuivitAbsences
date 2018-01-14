@@ -1,0 +1,11 @@
+package tn.iit.util;
+
+import tn.iit.models.SalleModel;
+
+public class PostEntity {
+
+	
+	public static viod ajoutSalle(SalleModel s) {
+		
+	}
+}

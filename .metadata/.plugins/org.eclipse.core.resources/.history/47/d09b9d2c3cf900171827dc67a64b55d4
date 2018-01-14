@@ -1,0 +1,171 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.List"%>
+<%@page import="tn.iit.models.*"%>
+<%@page import="java.io.IOException"%>
+<%@page import="tn.iit.util.*"%>
+<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+		SeanceModel sun = (SeanceModel) session.getAttribute("s");
+		String idd = request.getParameter("id");
+		out.print(idd);
+		//long id = Long.parseLong();
+		SeanceModel sd = null;
+		try {
+			System.out.println("liste de tt les seance");
+			sd = GetEntity.getSeance(1);
+			//out.print(sd);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+	%>
+	<form action="SeanceServlet" method="post">
+		<table>
+			<tr>
+				<td>Date Seance</td>
+				<td><input type="text" name="dateSeance"
+					value="<%out.print(sun.getDateSeance());%>"></td>
+			</tr>
+			<tr>
+				<td>Heure Debut</td>
+				<td><input type="text" name="" value="<%out.print(sun.getHeureDebut());%>"></td>
+			</tr>
+			<tr>
+				<td>Heure Fin</td>
+				<td><input type="text" name="" value="<%out.print(sun.getHeureFin());%>"></td>
+			</tr>
+			<tr>
+				<td>salle</td>
+				<td><input type="text" name="" value="<%out.print(sun.getSalle().getNom());%>">
+				<select name="">
+					<option value=""></option>
+				</select>
+				</td>
+
+			</tr>
+			<tr>
+				<td>niveau</td>
+				<td><input type="text" name="" value="">
+				<select name="">
+					<option value=""></option>
+				</select>
+				</td>
+
+			</tr>
+			<tr>
+				<td>matiere</td>
+				<td><input type="text" name="" value="">
+				<select name="">
+					<option value=""></option>
+				</select>
+				</td>
+
+			</tr>
+			<tr>
+				<td>enseignant</td>
+				<td><input type="text" name="" value=""></td>
+
+			</tr>
+			<tr>
+				<td>departement</td>
+				<td><input type="text" name="" value=""></td>
+			</tr>
+			<tr>
+				<td><input type="submit" name="update" value="modifier"></td>
+			</tr>
+		</table>
+	</form>
+
+
+
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<table>
+		<tr>
+			<td>Date Seance</td>
+			<td>Heure Debut</td>
+			<td>Heure Fin</td>
+			<td>salle</td>
+			<td>niveau</td>
+			<td>matiere</td>
+			<td>enseignant</td>
+			<td>departement</td>
+		</tr>
+		<%
+			if (sd != null) {
+		%>
+		<%-- <c:forEach items="${seanceArray}" var="item"> --%>
+		<tr>
+			<td>
+				<%
+					out.print(sd.getDateSeance().toString());
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getHeureDebut() + "h");
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getHeureFin() + "h");
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getSalle().getNom());
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getNiveau().getFiliere() + " " + sd.getNiveau().getAnnee() + "année");
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getMatiere().getNom());
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getEnseignant().getNom() + " " + sd.getEnseignant().getPrenom());
+				%>
+			</td>
+			<td>
+				<%
+					out.print(sd.getDepartement().getNom());
+				%>
+			</td>
+
+		</tr>
+		<%
+			} else {
+				// aucune seance trouver
+		%>
+		<tr>
+			<td><h1>Aucune seance trouver</h1></td>
+		</tr>
+		<%
+			}
+		%>
+	</table>
+
+</body>
+</html>

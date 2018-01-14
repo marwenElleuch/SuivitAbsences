@@ -1,0 +1,143 @@
+
+import com.africainnovation.viche.geny.databinding.ActivityCurrentCurrencyBinding;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+public class CurrentCurrency extends AppCompatActivity {
+
+    private String TAG = MainActivity.class.getSimpleName();
+
+    private ProgressDialog pDialog;
+
+    // URL to get contacts JSON
+    private static String url = "http://apilayer.net/api/live?access_key=6ffc8f0c3cce33e8bc973e3a6b0b8b0c";
+
+    ArrayList<String> currencyList;
+
+    private ActivityCurrentCurrencyBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(CurrentCurrency.this, R.layout.activity_current_currency);
+
+        currencyList = new ArrayList<>();
+
+        binding.toolbar.setTitle("GENY");
+
+        setSupportActionBar(binding.toolbar);
+
+        new GetContacts().execute();
+
+    }
+
+    /**
+     * Async task class to get json by making HTTP call
+     */
+    private class GetContacts extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(CurrentCurrency.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            HttpHandler sh = new HttpHandler();
+
+            // Making a request to url and getting response
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    String currencySource = jsonObj.getString("source");
+
+                    JSONObject currencyQuotes = jsonObj.getJSONObject("quotes");
+
+                    String USDCAD = currencyQuotes.getString("USDCAD");
+                    String USDEUR = currencyQuotes.getString("USDEUR");
+                    String USDGBP = currencyQuotes.getString("USDGBP");
+                    String USDPLN = currencyQuotes.getString("USDPLN");
+
+                    currencyList.add("USD / CAD ---> "+USDCAD);
+                    currencyList.add("USD / PLN ---> "+USDPLN);
+                    currencyList.add("USD / EUR ---> "+USDEUR);
+                    currencyList.add("USD / GBP ---> "+USDGBP);
+
+                    binding.tvSourceCurrency.setText("Currency Source : "+currencySource);
+
+                    GraphView graph = (GraphView) findViewById(R.id.graph1);
+                    BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
+                            new DataPoint(0, 1),
+                            new DataPoint(1, 2.306214),
+                            new DataPoint(2, 4.576504),
+                            new DataPoint(3, 1.850904),
+                            new DataPoint(4, 1.75069)
+                    });
+
+                    graph.addSeries(series);
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<String>(CurrentCurrency.this, android.R.layout.simple_list_item_1, currencyList);
+
+            binding.list.setAdapter(adapter);
+        }
+
+    }
+}

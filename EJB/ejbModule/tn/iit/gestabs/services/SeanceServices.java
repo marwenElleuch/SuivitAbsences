@@ -42,4 +42,10 @@ public class SeanceServices implements SeanceServicesLocal {
 		em.merge(s);
 	}
 
+	@Override
+	public List<Seance> getByDate(String date) {
+		return em.createQuery("SELECT u FROM Seance u WHERE u.dateSeance LIKE '%" + date + "%'", Seance.class)
+				.getResultList();
+	}
+
 }

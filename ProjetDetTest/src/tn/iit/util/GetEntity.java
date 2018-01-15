@@ -65,6 +65,7 @@ public class GetEntity {
 			e.printStackTrace();
 			System.out.println(e.getMessage() + "*******");
 		}
+		
 		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSalle()).serializeNulls()
 				.create();
 		List<SalleModel> salles = gson.fromJson(contentall, new TypeToken<List<SalleModel>>() {
@@ -72,7 +73,7 @@ public class GetEntity {
 
 		return salles;
 	}
-
+	
 	public static SeanceModel getSeance(long id) throws IOException {
 		String uri = "http://localhost:8080/Service/seance/get/" + id;
 		String content = "";
@@ -105,7 +106,23 @@ public class GetEntity {
 
 		return seances;
 	}
-
+	
+	public static List<SeanceModel> getListSeancesByDate(String date) throws IOException {
+		String uri = "http://localhost:8080/Service/seance/byDate/"+date;
+		String contentall = "";
+		try {
+			contentall = Util.fetchContent(uri);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage() + "*******");
+		}
+		Gson gson = new GsonBuilder().registerTypeAdapter(Object.class, new JsonDeserializerSeance()).serializeNulls()
+				.create();
+		List<SeanceModel> seances = gson.fromJson(contentall, new TypeToken<List<SeanceModel>>() {
+		}.getType());
+		return seances;
+	}
+	
 	public static NiveauModel getNiveau(long id) throws IOException {
 		String uri = "http://localhost:8080/Service/niveau/get/" + id;
 		String content = "";

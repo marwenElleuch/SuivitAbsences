@@ -1,7 +1,6 @@
 package tn.iit.gestabs.entites;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ public class Seance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private Date dateSeance;
+	private String dateSeance;
 	private int heureDebut;
 	private int heureFin;
 
@@ -49,11 +48,11 @@ public class Seance implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateSeance() {
+	public String getDateSeance() {
 		return dateSeance;
 	}
 
-	public void setDateSeance(Date dateSeance) {
+	public void setDateSeance(String dateSeance) {
 		this.dateSeance = dateSeance;
 	}
 

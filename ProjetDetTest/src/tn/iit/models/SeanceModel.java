@@ -117,4 +117,12 @@ public class SeanceModel implements Serializable {
 				+ ",\n+++" + enseignant.toString() + ",\n+++" + departement.toString() + "]***";
 	}
 
+	public String descrptionSeance() {
+		String s = "avis pour les etudiant" + niveau.getFiliere() + " " + niveau.getAnnee()
+				+ " annee q'une seance de ratrappage de la matiere " + matiere.getNom()
+				+ " sera planifier avec le prof " + enseignant.getNom() + " " + enseignant.getPrenom() + " dans la"
+				+ salle.getNom();
+		return s;
+	}
+
 }

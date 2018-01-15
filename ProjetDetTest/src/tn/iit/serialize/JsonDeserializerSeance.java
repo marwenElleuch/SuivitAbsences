@@ -17,6 +17,7 @@ import tn.iit.models.MatiereModel;
 import tn.iit.models.NiveauModel;
 import tn.iit.models.SalleModel;
 import tn.iit.models.SeanceModel;
+import tn.iit.util.Util;
 
 public class JsonDeserializerSeance implements JsonDeserializer<SeanceModel> {
 
@@ -28,14 +29,12 @@ public class JsonDeserializerSeance implements JsonDeserializer<SeanceModel> {
 		int id = seanceJson.get("id").getAsInt();
 		int heureDebut = seanceJson.get("heureDebut").getAsInt();
 		int heureFin = seanceJson.get("heureFin").getAsInt();
-		try {
-			String dateSeance = seanceJson.get("dateSeance").getAsString();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			date = format.parse(dateSeance);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
+		String dateSeance = seanceJson.get("dateSeance").getAsString();
+		System.out.println(dateSeance);
+		//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		//date = format.parse(dateSeance);
+		s.setDateSeance(Util.parceDate(dateSeance));
+		
 		JsonObject se = seanceJson.get("salle").getAsJsonObject();
 		SalleModel salle = new JsonDeserializerSalle().deserialize(se, typeOfT, context);
 
@@ -52,7 +51,7 @@ public class JsonDeserializerSeance implements JsonDeserializer<SeanceModel> {
 		DepartementModel departement = new JsonDeserializerDepartement().deserialize(departementJson, typeOfT, context);
 
 		s.setId(id);
-		s.setDateSeance(date);
+		//s.setDateSeance(date);
 		s.setHeureDebut(heureDebut);
 		s.setHeureFin(heureFin);
 		s.setSalle(salle);

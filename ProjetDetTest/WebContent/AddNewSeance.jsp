@@ -10,8 +10,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
+		class="navbar-brand" href="">Suivit Absences</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link"
+				href="CompteBancaireServlet?load=load">Seance <span
+					class="sr-only">(current)</span></a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="ClientBanqueServlet">Salle</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="ClientBanqueServlet">niveau</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="ClientBanqueServlet">matiere</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="ClientBanqueServlet">departement</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="ClientBanqueServlet">enseignat</a></li>
+		</ul>
+	</div>
+	</nav>
+
+<div class="container">
 	<%
 		SeanceModel sun = (SeanceModel) session.getAttribute("s");
 		List<SalleModel> salles = (List<SalleModel>) session.getAttribute("salles");
@@ -20,6 +53,9 @@
 		List<EnseignantModel> enseignants = (List<EnseignantModel>) session.getAttribute("enseignants");
 		List<DepartementModel> departements = (List<DepartementModel>) session.getAttribute("departements");
 	%>
+	<br><br>
+	<center>
+	<h3>Insérer une nouvelle Seance :</h3>
 	<form action="SeanceServlet" method="post">
 		<table>
 			<tr>
@@ -85,6 +121,7 @@
 		</table>
 	</form>
 
-
+</center>
+</div>
 </body>
 </html>

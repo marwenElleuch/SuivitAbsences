@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -40,14 +39,14 @@ public class SeanceService {
 		System.out.println("this is a salle pased from postman :" + seance.toString());
 		services.add(seance);
 	}
-	
-	@POST
-	@Path("/ad/{seance}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public void add2( Seance seance) {
-		System.out.println("this is a seance pased from postman :" + seance.toString());
-		services.add(seance);
-	}
+
+//	@POST
+//	@Path("/ad/{seance}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public void add2(Seance seance) {
+//		System.out.println("this is a seance pased from postman :" + seance.toString());
+//		services.add(seance);
+//	}
 
 	@GET
 	@Path("/get/{id}")
@@ -55,6 +54,13 @@ public class SeanceService {
 	public Seance getById(@PathParam("id") Long id) {
 		System.out.println(services.getById(id).toString());
 		return services.getById(id);
+	}
+
+	@GET
+	@Path("/byDate/{date}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Seance> getByDate(@PathParam("date") String date) {
+		return services.getByDate(date);
 	}
 
 	@PUT

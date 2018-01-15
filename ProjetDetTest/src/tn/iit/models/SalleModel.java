@@ -51,4 +51,5 @@ public class SalleModel implements Serializable {
 		return true;
 	}
 
+	
 }
